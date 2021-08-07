@@ -13,29 +13,39 @@ struct ContentView: View {
 
     var body: some View {
         VStack{
-            Text("Memorize!")
-                .font(.largeTitle)
-                .fontWeight(.medium)
+            HStack{
+                Text("Memorize!")
+                Text("Score: \(viewModel.score)")
+            }
+            .font(.largeTitle)
+            Text("Theme: \(viewModel.gameTheme.name)")
+
             ScrollView{
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 70))]) {
                     ForEach(viewModel.cards) { card in
-                        CardView(card: card)
+                        CardView(card: card, cardColor: viewModel.gameTheme.color)
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture {
                                 viewModel.choose(card)
                             }
                     }
                 }
+            }.foregroundColor(viewModel.gameTheme.color)
+            HStack{
+                Button(action: {
+                    viewModel.resetGame()
+                }, label: {
+                    Text("Reset Game")
+                })
             }
-                
         }
-        .foregroundColor(.red)
         .padding(.horizontal)
     }
 }
 
 struct CardView: View {
     var card: MemoryGame<String>.Card
+    var cardColor: Color = .white
 
     var body: some View {
         ZStack{
@@ -45,7 +55,7 @@ struct CardView: View {
                 shape.strokeBorder(lineWidth: 3.0, antialiased: true)
                 Text(card.content).font(.largeTitle)
             } else {
-                shape.fill()
+                shape.fill(RadialGradient(gradient: Gradient(colors: [cardColor, .black]), center: .center, startRadius: 2, endRadius: 650))
             }
         }
     }
