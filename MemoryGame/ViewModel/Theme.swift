@@ -19,7 +19,5 @@ struct Theme {
     static let persons = Theme(name: "Persons" , emojis: ["👩🏻‍🔬","👩🏻‍🎨","👩🏽‍⚖️","👰🏿‍♂️","🦸🏼","🎅🏼","🦹🏻‍♀️","💆🏼‍♀️","🧖🏽"], color: .gray)
     static let sports = Theme(name: "Sports" , emojis: ["⚽️","🏈","🏀","🎾","🏉","🏓","🥊","🤾🏻","🏄🏻‍♀️","🤺"], cardsNumber: 10, color: .red)
     static let halloween = Theme(name: "Halloween" , emojis: ["🧛🏻‍♀️","🧚","🧜🏻","👻","🎃","👹"], cardsNumber: 6, color: .orange)
-    
     static var themes = [smileys, animals, vehicles, persons, sports, halloween]
-    
 }
