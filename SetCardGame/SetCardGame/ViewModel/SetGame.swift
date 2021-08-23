@@ -18,19 +18,33 @@ class SetGame: ObservableObject {
     var deck: [SetCardContent]{
         return game.deck
     }
+    var deckCount: Int {
+        return game.deckCount
+    }
+    var selectedCount: Int {
+        return game.selectedCount
+    }
     var dealtCards: [SetCardContent]{
         return game.dealtCards
+    }
+    
+    var discardPile: [SetCardContent]{
+        return game.discardPile
+    }
+    
+    var score: Int {
+        return game.score
     }
     
     // MARK: Intent(s)
     func dealCards(){
         game.dealMoreCards()
     }
-    
+
     func chooseCard(card: SetCardContent){
         game.choose(card)
     }
-    
+
     func reset() {
         let cards = SetCardContent.generateAll()
         game = GameOfSet(cards: cards)

@@ -7,46 +7,10 @@
 
 import SwiftUI
 
-struct dummyContent: Identifiable, Hashable {
-   
-    var number: Number
-    var figure: Figure
-    var color: Coloring
-    var shading: Shading
-    var id = UUID()
-    
-    enum Number: Int, CaseIterable {
-        case one = 1, two, three
-    }
-    enum Coloring: CaseIterable{
-        case blue, green, red
-    }
-    enum Figure: CaseIterable {
-        case diamond, rectangle, capsule
-    }
-    enum Shading: String, CaseIterable {
-        case solid, stripe, none
-    }
-    static func generateAll() -> [Self] {
-        var cards = [Self]()
-        for numbers in Number.allCases {
-            for colors in Coloring.allCases {
-                for figures in Figure.allCases {
-                    for shadings in Shading.allCases {
-                        cards.append(Self.init(number: numbers, figure: figures, color: colors, shading: shadings))
-                    }
-                }
-            }
-        }
-        return cards
-    }
-    
-}
 
 struct CardView: View {
-    //var card = ModelCard
-    var card : SetCardContent
 
+    var card : SetCardContent
     
     var figureColor: Color {
         switch card.color {
@@ -70,13 +34,11 @@ struct CardView: View {
         }
     }
     
-    
-    
     var body: some View {
+        
         ZStack {
             GeometryReader { geometry in
                 VStack{
-
                     if card.figure == .capsule {
                         ForEach(0..<card.number.rawValue, id: \.self) { _ in
                             CapsuleView(shade: figureShading, color: figureColor)
@@ -95,9 +57,20 @@ struct CardView: View {
                                 .frame(width: geometry.size.height/3, height: geometry.size.width/4, alignment: .center)
                         }
                     }
-                }.frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
+                }
+                
+                .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
+                .background(
+                    RoundedRectangle(
+                        cornerRadius: 10,
+                        style: .continuous
+                    )
+                    .fill(Color.white)
+                )
             }
-        }.background(Color.white).aspectRatio(2.5/3.5, contentMode: .fit)
+        }
+        
+        
     }
 }
 

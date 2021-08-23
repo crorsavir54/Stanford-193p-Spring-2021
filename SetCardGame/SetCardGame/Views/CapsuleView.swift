@@ -9,9 +9,8 @@ import SwiftUI
 
 struct CapsuleView: View {
     var shade: String = "solid"
-    var color: Color = .pink
+    var color: Color
     var body: some View {
-        
         if shade == "solid" {
             Capsule()
                 .fill(color).opacity(1)

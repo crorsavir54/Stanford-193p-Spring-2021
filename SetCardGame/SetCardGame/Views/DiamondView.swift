@@ -26,7 +26,7 @@ struct Diamond: Shape, InsettableShape {
 }
 struct DiamondView: View {
     var shade: String = "solid"
-    var color: Color = .pink
+    var color: Color
     var body: some View {
         
         if shade == "solid" {
@@ -42,8 +42,8 @@ struct DiamondView: View {
             Diamond()
                 .strokeBorder(color,lineWidth: 2)
         }
-            
-
-
+        
+        
+        
     }
 }

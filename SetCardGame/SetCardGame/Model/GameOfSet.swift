@@ -9,36 +9,44 @@ import Foundation
 
 struct GameOfSet<Card> where Card: CardType {
     private(set) var deck: [Card]
-
     private(set) var dealtCards: [Card]
-    private(set) var discardPile: [Card] // Can be removed right away or store here.
+    private(set) var discardPile: [Card] // Store matched cards here for display
+    private(set) var score = 0
     private var selectedCards: [Card] {
         dealtCards.filter{ $0.isSelected }
     }
+    
     init(cards: [Card]) {
         deck = cards.shuffled()
         dealtCards = []
         discardPile = []
     }
+    
+    var deckCount: Int {
+        return deck.count
+    }
+    var selectedCount: Int {
+        return selectedCards.count
+    }
+    
+    
     mutating func choose(_ card: Card) {
-//        guard selectedCards.count < 3 else {
-//            return
-//        }
+        guard selectedCards.count < 3 else {
+            return cardSetCheck()
+        }
         print("Card chosen \(card) and number of selected cards \(selectedCards.count)")
         for index in dealtCards.indices {
             if dealtCards[index] == card {
                 dealtCards[index].isSelected.toggle()
             }
         }
-        
-        if selectedCards.count == 3 {
+        if selectedCount == 3 {
             print("Selected cards is now 3 need to check")
-            cardSetCheck()
+            
         }
     }
     
     mutating func dealInitialCards() {
-        
         guard dealtCards.count < 81 else {
             return print("No more cards")
         }
@@ -63,7 +71,7 @@ struct GameOfSet<Card> where Card: CardType {
         print("Cards in game: \(dealtCards.count), Cards in deck: \(deck.count)")
     }
     
-
+    
     mutating func unselectCards(){
         // All cards should now be unselected
         for index in dealtCards.indices {
@@ -103,19 +111,26 @@ struct GameOfSet<Card> where Card: CardType {
         if (colorMatch && figureMatch && numberMatch && shadingMatch) {
             print("SET!!")
             // Copy cards to discard pile, and then remove all cards in dealtcards that are in discardpilea
+            score += setScore
             for cards in selectedCards {
                 discardPile.append(cards)
             }
             print("discard pile: \(discardPile.count)")
             dealtCards.removeAll(where: {discardPile.contains($0)}) //
             
+            
+            
         } else {
+            score += notSetScore
             print("NOT SET!!")
             unselectCards()
         }
     }
     
     // MARK: Constants
+    let setScore = 5
+    let notSetScore = -3
+    
     let cardsToDeal = 3
     let initialCards = 12
 }
