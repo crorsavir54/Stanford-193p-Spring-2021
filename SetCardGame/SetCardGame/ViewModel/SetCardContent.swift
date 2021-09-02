@@ -14,7 +14,6 @@ struct SetCardContent: CardType, Identifiable, Hashable, Equatable {
     var color: Coloring
     var shading: Shading
     var id = UUID()
-    
     var isSelected: Bool
     
     enum Number: Int, CaseIterable {

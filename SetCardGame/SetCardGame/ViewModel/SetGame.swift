@@ -18,6 +18,9 @@ class SetGame: ObservableObject {
     var deck: [SetCardContent]{
         return game.deck
     }
+    var setStatus: String {
+        return game.set
+    }
     var deckCount: Int {
         return game.deckCount
     }

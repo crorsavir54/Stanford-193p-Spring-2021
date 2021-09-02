@@ -10,6 +10,7 @@ import SwiftUI
 struct SetGameView: View {
     @ObservedObject var game: SetGame
     @State private var isTapped: Bool = false
+    @State private var showRecentMatch: Bool = false
     
     private let layout = [
         GridItem(.adaptive(minimum: 50)),
@@ -32,6 +33,11 @@ struct SetGameView: View {
                 .font(.title3)
                 .padding(.leading)
             Spacer()
+            Text("\(game.setStatus)")
+                .font(.title)
+                .foregroundColor(.red)
+                .padding(.leading)
+            Spacer()
             Button(action: {
                     withAnimation {
                         game.reset()
@@ -49,9 +55,9 @@ struct SetGameView: View {
     
     var DealtCards: some View {
         ZStack {
-            Color.gray.opacity(0.2)
+            Color.gray.opacity(0.1)
                 .ignoresSafeArea()
-            VStack {
+            VStack() {
                 ScrollView(content: {
                     LazyVGrid(columns: layout) {
                         ForEach(game.dealtCards) { card in
@@ -67,13 +73,14 @@ struct SetGameView: View {
                                     }
                                     
                                 }
-                            
                         }
                         
                     }.padding()
                 }
                 )
-                
+                if (showRecentMatch) {
+                    recentSetView
+                }
             }
         }
     }
@@ -86,14 +93,13 @@ struct SetGameView: View {
                         CardView(card: card)
                             .aspectRatio(3/4, contentMode: .fit)
                             .frame(width: 75, height: 120, alignment: .center)
-                        
                     }
                 }
                 
                 Image("backOfCard")
                     .resizable()
-                    .aspectRatio(3/4, contentMode: .fit)
-                    .frame(width: 80, height: 120, alignment: .center)
+                    .aspectRatio(2.5/3.5, contentMode: .fit)
+                    .frame(width: 80, height: 130, alignment: .center)
                     .scaleEffect(isTapped ? 1.1 : 1)
                     .animation(.spring(response: 0.4, dampingFraction: 0.6))
                     .onTapGesture {
@@ -113,21 +119,45 @@ struct SetGameView: View {
                 )
                 .fill(Color.gray.opacity(0.1))
                 .aspectRatio(3/4, contentMode: .fit)
-                .frame(width: 75, height: 120, alignment: .center)
+                .frame(width: 80, height: 130, alignment: .center)
                 
-                
-                
-                ForEach(game.discardPile.prefix(3)) { card in
+                ForEach(showRecentMatch ? game.discardPile.dropLast(3) : game.discardPile.suffix(3)) { card in
                     CardView(card: card)
-                        .aspectRatio(3/4, contentMode: .fit)
-                        .frame(width: 75, height: 120, alignment: .center)
+                        .aspectRatio(2.5/3.5, contentMode: .fit)
+                        .frame(width: 80, height: 120, alignment: .center)
+                        .clipped()
+                        .shadow(radius: 3)
                         .offset(x: CGFloat(Int.random(in: -5..<5)), y: CGFloat(Int.random(in: -5..<5)))
                 }
+                }.onTapGesture {
+                    withAnimation{
+                        showRecentMatch.toggle()
+                    }
+                    
             }
         }.padding(.horizontal)
     }
-}
+    
+    var recentSetView: some View {
+        LazyVGrid(columns: layout2, content: {
+            ForEach(game.discardPile.suffix(3)) { card in
+                CardView(card: card)
+                    .aspectRatio(2.5/3.5, contentMode: .fit)
+                    .clipped()
+                    .shadow(color: .black.opacity(0.15), radius: 12)
+                
+            }.padding()
+        })
 
+    }
+    private let layout2 = [
+        GridItem(.adaptive(minimum: 60)),
+        GridItem(.adaptive(minimum: 60)),
+        GridItem(.adaptive(minimum: 60))
+    ]
+
+
+}
 
 struct SetGameView_Previews: PreviewProvider {
     static var previews: some View {

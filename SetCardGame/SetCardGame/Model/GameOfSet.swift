@@ -16,6 +16,8 @@ struct GameOfSet<Card> where Card: CardType {
         dealtCards.filter{ $0.isSelected }
     }
     
+    private(set) var set = ""
+    
     init(cards: [Card]) {
         deck = cards.shuffled()
         dealtCards = []
@@ -31,7 +33,7 @@ struct GameOfSet<Card> where Card: CardType {
     
     
     mutating func choose(_ card: Card) {
-        guard selectedCards.count < 3 else {
+        guard selectedCards.count != 3 else {
             return cardSetCheck()
         }
         print("Card chosen \(card) and number of selected cards \(selectedCards.count)")
@@ -42,6 +44,7 @@ struct GameOfSet<Card> where Card: CardType {
         }
         if selectedCount == 3 {
             print("Selected cards is now 3 need to check")
+//            return cardSetCheck()
             
         }
     }
@@ -110,6 +113,7 @@ struct GameOfSet<Card> where Card: CardType {
         
         if (colorMatch && figureMatch && numberMatch && shadingMatch) {
             print("SET!!")
+            set = "SET"
             // Copy cards to discard pile, and then remove all cards in dealtcards that are in discardpilea
             score += setScore
             for cards in selectedCards {
@@ -123,6 +127,7 @@ struct GameOfSet<Card> where Card: CardType {
         } else {
             score += notSetScore
             print("NOT SET!!")
+            set = "NOT SET"
             unselectCards()
         }
     }
