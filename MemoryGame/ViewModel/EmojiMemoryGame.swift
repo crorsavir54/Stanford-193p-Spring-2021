@@ -11,42 +11,42 @@ class EmojiMemoryGame: ObservableObject {
     
     typealias Card = MemoryGame<String>.Card
     
+    var theme: Theme
+    
+    @Published var model: MemoryGame<String>
+    
+    init(theme: Theme) {
+        self.theme = theme
+        model = EmojiMemoryGame.createMemoryGame(with: theme)
+    }
+
+    
+    private static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
+        
+         let emojis = theme.emojis.map{String($0)}.shuffled()
+         let pairsOfCards = theme.cardsNumber
+         return MemoryGame<String>(numberOfPairsOfCards: pairsOfCards, createCardContent: { pairIndex in
+                             return emojis[pairIndex]})
+     }
+
     // MARK: - Access to Model
-    @Published private var model: MemoryGame<String>
-    var gameTheme: Theme
+
     var cards: [Card] {
         model.cards
     }
-    
+
     var score: Int {
         model.score
     }
-    init() {
-        let theme = Theme.themes.randomElement()!
-        gameTheme = theme
-        model = EmojiMemoryGame.createMemoryGame(with: gameTheme)
-    }
-
-    static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
-        
-        let emojis = theme.emojis.shuffled()
-        let pairsOfCards = theme.cardsNumber ?? Int.random(in: 2...emojis.count)
-        
-        
-        return MemoryGame<String>(numberOfPairsOfCards: pairsOfCards, createCardContent: { pairIndex in
-                            return emojis[pairIndex]})
-    }
     
-
     // MARK: - Intent(s)
     
     func choose(_ card: Card) {
-        model.choose(card)
+        model.choose(card: card)
     }
     
     func resetGame() {
-        gameTheme = Theme.themes.randomElement()!
-        model = EmojiMemoryGame.createMemoryGame(with: gameTheme)
+        model = EmojiMemoryGame.createMemoryGame(with: theme)
     }
 }
   
