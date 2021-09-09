@@ -15,7 +15,7 @@ Repository for Stanford 193p Spring (Developing Applications for iOS using Swift
 
 ### Emoji Art
 
-|![Alt Text](https://media.giphy.com/media/VoSVfXunY72KQq2DoU/giphy.gif)
+|![Alt Text](https://github.com/crorsavir54/stanford2021spring/blob/main/emojiart-preview.gif)
 
 ## To access solutions
 Check commits and look for the assigment number
