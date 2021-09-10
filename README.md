@@ -7,7 +7,7 @@ Repository for Stanford 193p Spring (Developing Applications for iOS using Swift
 ### Emoji Memory Game
 | Theme Select  | Theme Edit | Game View |
 | ------------- | ------------- | ------------- |
-| ![Main View](https://i.imgur.com/12aGBAW.png)  | ![Edit Theme View](https://i.imgur.com/12aGBAW.png) |![Game View](https://i.imgur.com/hCjgx89.png)
+| ![Main View](https://i.imgur.com/12aGBAW.png)  | ![Edit Theme View](https://i.imgur.com/WkMeKXi.png) |![Game View](https://i.imgur.com/hCjgx89.png)
 ### Set Game
 | Set Game View  | |  |
 | ------------- | ------------- | ------------- |
