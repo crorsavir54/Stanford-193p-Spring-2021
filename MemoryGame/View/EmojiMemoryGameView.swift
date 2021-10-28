@@ -23,7 +23,7 @@ struct EmojiMemoryGameView: View {
             HStack {
                 Text("Score:")
                     .font(.title).fontWeight(.medium)
-                    .foregroundColor(Color(game.theme.color))
+                    .foregroundColor(Color(.black))
                 Text("\(game.score)")
                     .font(.title).fontWeight(.bold)
                     .foregroundColor(game.score < 0 ? .pink : .blue)

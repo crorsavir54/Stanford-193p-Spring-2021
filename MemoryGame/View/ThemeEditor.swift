@@ -58,10 +58,10 @@ struct ThemeEditor: View {
                 }
             }
             Section(header: HStack {
-                Text("Emoji")
+                Text("Theme Color")
                 Circle()
                     .fill(Color(themeToAdd.color))
-                    .offset(x: -140, y: 0)
+                    .offset(x: -110, y: 0)
             }
                         
                         

@@ -12,7 +12,6 @@ struct ThemesChooser: View {
     @EnvironmentObject var gameThemes: ThemeChooser
     @Environment(\.presentationMode) var presentationMode
     @State var editMode: EditMode = .inactive
-    
     @State var selectedTheme = Theme(name: "", emojis: "", cardsNumber: 0, color: UIColor.getRGB(.lightGray))
     @State var unchangedSelectedTheme = Theme(name: "", emojis: "", cardsNumber: 0, color: UIColor.getRGB(.lightGray))
     
